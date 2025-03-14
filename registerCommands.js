@@ -7,7 +7,10 @@ const commands = [
     .setDescription("Put a user in the trash.")
     .addUserOption(option =>
       option.setName("user").setDescription("Select a user").setRequired(true)
-    )
+    ),
+  new SlashCommandBuilder()
+    .setName("xkcd")
+    .setDescription("Sends a random xkcd meme")
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
