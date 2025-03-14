@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, SlashCommandBuilder } = require("discord.js");
 const { createCanvas, loadImage } = require("canvas");
 const dotenv = require("dotenv").config();
+const fs = require('fs');
 // dotenv.config();
 
 const client = new Client({
@@ -11,14 +12,25 @@ client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
 
     // Debug: List all servers the bot is in
-    client.guilds.cache.forEach(guild => {
+   client.guilds.cache.forEach(guild => {
         console.log(`Bot is in: ${guild.name} (ID: ${guild.id})`);
     });
 });
 // message moderation defined here ---------------------
+let badwords = [];
+try{
+  badwords = JSON.parse(fs.readFileSync('badwords.json', 'utf-8'));
+}
+catch{
+  console.error('Failed to load swear dictionary', error);
+}
 client.on('messageCreate', async msg => {
   if(msg.author.bot) return;
   const comment = msg.content.toLowerCase(); // Normalize case sensitivity
+  const found = badwords.find(word=>comment.includes(word))
+  if(found){
+    msg.reply(`\`\`\`|"${found}"|\`\`\`\nNot in my Christian server >:( `);
+  }
   if(comment.includes('furry')){
     msg.reply('FURRY ALERT! FURRY ALERT!');
     msg.reply('INITIATING DESTRUCTION SEQUENCE...');
