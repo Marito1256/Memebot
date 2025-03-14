@@ -28,22 +28,27 @@ client.on('messageCreate', async msg => {
   if(msg.author.bot) return;
   const comment = msg.content.toLowerCase(); // Normalize case sensitivity
   const found = badwords.find(word=>comment.includes(word))
+  if(found === 'nigger' || found === 'nigga'){
+	msg.reply(`\`\`\`|"${found}"|\`\`\`\nWoah there! Next time, please refrain from using this horribly racist word. Instead, please use the universally accepted term "Basketball American".Thank you for your understanding. I am a bot, and this action was performed automatically.`);
+  return;
+  }
+  if(found === 'sand nigg' || found === 'flight risk'){
+	msg.reply(`\`\`\`|"${found}"|\`\`\`\nWoah there! Next time, please refrain from using this horribly racist term. Instead, please use the universally accepted term "Bomb American".Thank you for your understanding. I am a bot, and this action was performed automatically.`);
+  return;
+  }
   if(found){
     msg.reply(`\`\`\`|"${found}"|\`\`\`\nNot in my Christian server >:( `);
   }
-  if(comment.includes('furry')){
-    msg.reply('FURRY ALERT! FURRY ALERT!');
-    msg.reply('INITIATING DESTRUCTION SEQUENCE...');
-    setTimeout(() => {
-      msg.reply('3');
-    }, 3000);
-    setTimeout(() => {
-      msg.reply('2');
-    }, 6000);
-    setTimeout(() => {
-      msg.reply('1');
-    }, 9000);
-  }
+  if (comment.includes('furry') || comment.includes('furries')) {
+    msg.reply('🚨 **FURRY ALERT! FURRY ALERT!** 🚨')
+       .then(sentMessage => {
+           setTimeout(() => sentMessage.edit('🛑 **INITIATING DESTRUCTION SEQUENCE...** 🛑'), 3000);
+           setTimeout(() => sentMessage.edit('🔥 **3...** 🔥'), 6000);
+           setTimeout(() => sentMessage.edit('🔥 **2...** 🔥'), 9000);
+           setTimeout(() => sentMessage.edit('💥 **1...** 💥'), 12000);
+           setTimeout(() => sentMessage.edit('☠ **TARGET ELIMINATED.** ☠'), 15000);
+       });
+}
 });
 // Slash commands defined below ------------------------
 client.on("interactionCreate", async (interaction) => {
